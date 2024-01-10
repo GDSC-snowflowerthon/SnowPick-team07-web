@@ -1,11 +1,10 @@
 import SnowEffectOnUploadedImage from "../../snowEffect";
+import NavBar from "../layout/Navbar";
 
 const HomePage = () => {
   return (
     <div>
-      <div>1</div>
-      <div>2</div>
-      <div>3</div>
+      <NavBar />
       <SnowEffectOnUploadedImage />
     </div>
   );
