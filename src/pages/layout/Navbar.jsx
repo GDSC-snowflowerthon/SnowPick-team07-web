@@ -1,25 +1,14 @@
-import styled from "styled-components";
+import * as S from "./style";
 
 const NavBar = () => {
-  const NavContainer = styled.div`
-    height: 75px;
-    padding: 1rem;
-    color: white;
-    background: teal;
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  `;
-
   return (
-    <NavContainer>
+    <S.NavContainer>
       <h1>상단 네브바</h1>
-      <nav>
-        <span>Meun1</span>
-        <span>Meun2</span>
-      </nav>
-    </NavContainer>
+      <S.NavItemContainer>
+        <S.NavItem>Meun1</S.NavItem>
+        <S.NavItem>Meun2</S.NavItem>
+      </S.NavItemContainer>
+    </S.NavContainer>
   );
 };
 
