@@ -26,6 +26,24 @@ const ListCard = () => {
       <S.CardContainer onClick={() => handleClickCard("image1.jpg")}>
         List Card 1
       </S.CardContainer>
+      <S.CardContainer onClick={() => handleClickCard("image1.jpg")}>
+        List Card 2
+      </S.CardContainer>
+      <S.CardContainer onClick={() => handleClickCard("image1.jpg")}>
+        List Card 3
+      </S.CardContainer>
+      <S.CardContainer onClick={() => handleClickCard("image1.jpg")}>
+        List Card 4
+      </S.CardContainer>
+      <S.CardContainer onClick={() => handleClickCard("image1.jpg")}>
+        List Card 5
+      </S.CardContainer>
+      <S.CardContainer onClick={() => handleClickCard("image1.jpg")}>
+        List Card 6
+      </S.CardContainer>
+      <S.CardContainer onClick={() => handleClickCard("image1.jpg")}>
+        List Card 7
+      </S.CardContainer>
 
       {showDownloadPopup && (
         <DownloadPopup onDownload={handleDownload} onCancel={handleCancel} />
