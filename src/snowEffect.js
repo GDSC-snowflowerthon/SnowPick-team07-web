@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import GenerateGIFButton from "./components/button/GenerateGIFButton";
+import GenerateGIFButton from "./components/button/GenerateGIFButton/GenerateGIFButton";
 
 const SnowEffectOnUploadedImage = () => {
   const canvasRef = useRef(null);

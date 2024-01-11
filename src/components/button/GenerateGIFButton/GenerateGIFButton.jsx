@@ -1,4 +1,5 @@
 import React from "react";
+import * as S from "./style";
 import GIF from "gif.js";
 
 const GenerateGIFButton = ({
@@ -11,8 +12,10 @@ const GenerateGIFButton = ({
   snowflakeColor,
 }) => {
   const generateGIF = () => {
-    if (!canvasRef.current || !image) return;
-
+    if (!canvasRef.current || !image) {
+      alert("이미지를 선택해주세요.");
+      return;
+    }
     const gif = new GIF({
       workers: 2,
       quality: 10,
@@ -60,7 +63,11 @@ const GenerateGIFButton = ({
     return flakes;
   };
 
-  return <button onClick={generateGIF}>Generate GIF</button>;
+  return (
+    <S.GenerateButton onClick={generateGIF}>
+      GIF 이미지 생성하기
+    </S.GenerateButton>
+  );
 };
 
 export default GenerateGIFButton;
