@@ -1,9 +1,7 @@
+import ListCard from "../../components/ListCard/ListCard";
+
 const ListPage = () => {
-  return (
-    <div>
-      <span>리스트 페이지 입니다.</span>
-    </div>
-  );
+  return <ListCard />;
 };
 
 export default ListPage;
