@@ -5,6 +5,9 @@ const SnowEffectOnUploadedImage = () => {
   const canvasRef = useRef(null);
   const [image, setImage] = useState(null);
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
+  const [flakeImage, setFlakeImage] = useState(null);
+
+  const [useFlakeImage, setUseFlakeImage] = useState(true);
 
   // 사용자 설정을 위한 상태
   const [snowflakeSize, setSnowflakeSize] = useState(0.3); // 눈송이 크기
@@ -23,6 +26,19 @@ const SnowEffectOnUploadedImage = () => {
           setImageSize({ width: img.width, height: img.height });
           setImage(img);
         };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleFlakeImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => setFlakeImage(img);
         img.src = e.target.result;
       };
       reader.readAsDataURL(file);
@@ -60,21 +76,29 @@ const SnowEffectOnUploadedImage = () => {
     return () => {
       cancelAnimationFrame(requestId);
     };
-  }, [image, imageSize, snowflakeSize, snowflakeSpeed, snowflakeColor]);
+  }, [
+    image,
+    imageSize,
+    flakeImage,
+    snowflakeSize,
+    snowflakeSpeed,
+    snowflakeColor,
+    useFlakeImage,
+  ]);
 
   function Flake(snowflakeSize, snowflakeSpeed, snowflakeColor) {
     this.x = Math.random() * imageSize.width;
     this.y = Math.random() * imageSize.height;
-    this.size = (100 / (10 + Math.random() * 100)) * snowflakeSize;
+    this.size = (100 / (10 + Math.random() * 100)) * snowflakeSize * 2;
     this.speed = Math.pow(this.size * 0.8, 2) * snowflakeSpeed * 0.1 * 0.001;
     this.speed = this.speed < 1 ? 1 : this.speed;
-    this.velY = this.speed * 5;
+    this.velY = this.speed * 2;
     this.velX = 0;
-    this.stepSize = Math.random() / 30;
+    this.stepSize = Math.random() / 120;
     this.step = 0;
 
     this.update = function () {
-      const x = Math.sin((this.step += this.stepSize)) * 20;
+      const x = Math.sin((this.step += this.stepSize)) * snowflakeSpeed;
       this.y += this.velY;
       this.x += x;
 
@@ -89,10 +113,14 @@ const SnowEffectOnUploadedImage = () => {
     };
 
     this.draw = function (ctx) {
-      ctx.fillStyle = snowflakeColor;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 3);
-      ctx.fill();
+      if (useFlakeImage && flakeImage) {
+        ctx.drawImage(flakeImage, this.x, this.y, this.size, this.size);
+      } else {
+        ctx.fillStyle = snowflakeColor;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
     };
   }
 
@@ -149,6 +177,7 @@ const SnowEffectOnUploadedImage = () => {
   return (
     <div>
       <input type="file" onChange={handleImageChange} />
+      <input type="file" onChange={handleFlakeImageChange} />
       <canvas
         ref={canvasRef}
         style={{
@@ -157,7 +186,7 @@ const SnowEffectOnUploadedImage = () => {
           display: image ? "block" : "none",
         }}
       />
-      {/* 사용자 설정 div */}
+
       <div>
         <label>
           눈송이 크기:
@@ -187,6 +216,14 @@ const SnowEffectOnUploadedImage = () => {
             type="color"
             value={snowflakeColor}
             onChange={(e) => setSnowflakeColor(e.target.value)}
+          />
+        </label>
+        <label>
+          이미지로 눈 표시하기:
+          <input
+            type="checkbox"
+            checked={useFlakeImage}
+            onChange={() => setUseFlakeImage(!useFlakeImage)}
           />
         </label>
         <button onClick={generateGIF}>Generate GIF</button>
