@@ -1,4 +1,4 @@
-import SnowEffectOnUploadedImage from "../../snowEffect";
+import SnowEffectOnUploadedImage from "../../components/home/snowEffect/snowEffect";
 
 const HomePage = () => {
   return (

@@ -1,5 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
-import GIF from "gif.js";
+import * as S from "./style";
+import GenerateGIFButton from "../../button/GenerateGIFButton/GenerateGIFButton";
+import SnowSizeControl from "../label/SnowSizeControl";
+import SnowSpeedControl from "../label/SnowSpeedControl";
+import SnowColorControl from "../label/SnowColorControl";
 
 const SnowEffectOnUploadedImage = () => {
   const canvasRef = useRef(null);
@@ -124,60 +128,18 @@ const SnowEffectOnUploadedImage = () => {
     };
   }
 
-  const generateGIF = () => {
-    if (!canvasRef.current || !image) return;
-
-    const gif = new GIF({
-      workers: 2,
-      quality: 10,
-      width: imageSize.width,
-      height: imageSize.height,
-    });
-
-    const ctx = canvasRef.current.getContext("2d");
-    const snowflakes = createSnowflakes();
-
-    gif.on("finished", function (blob) {
-      const url = URL.createObjectURL(blob);
-
-      // 다운로드 링크 생성
-      const downloadLink = document.createElement("a");
-      downloadLink.href = url;
-      downloadLink.download = "snow_effect.gif"; // 다운로드되는 파일의 이름
-      downloadLink.text = "Download GIF"; // 링크 텍스트
-      downloadLink.style.display = "block"; // 링크를 보이게 설정
-      document.body.appendChild(downloadLink); // 링크를 문서에 추가
-    });
-
-    const drawFrame = () => {
-      ctx.clearRect(0, 0, imageSize.width, imageSize.height);
-      ctx.drawImage(image, 0, 0, imageSize.width, imageSize.height);
-      snowflakes.forEach((flake) => {
-        flake.update();
-        flake.draw(ctx);
-      });
-    };
-
-    for (let i = 0; i < 20; i++) {
-      drawFrame();
-      gif.addFrame(canvasRef.current, { copy: true, delay: 200 });
-    }
-
-    gif.render();
-  };
-
-  const createSnowflakes = () => {
-    const flakes = [];
-    for (let i = 0; i < 600; i++) {
-      flakes.push(new Flake(snowflakeSize, snowflakeSpeed, snowflakeColor));
-    }
-    return flakes;
-  };
-
   return (
     <div>
-      <input type="file" onChange={handleImageChange} />
-      <input type="file" onChange={handleFlakeImageChange} />
+      <S.FileInputContainer>
+        <S.InputContainer>
+          <label>이미지 업로드</label>
+          <S.StyledFileInput type="file" onChange={handleImageChange} />
+        </S.InputContainer>
+        <S.InputContainer>
+          <label>눈송이 이미지 업로드</label>
+          <S.StyledFileInput type="file" onChange={handleFlakeImageChange} />
+        </S.InputContainer>
+      </S.FileInputContainer>
       <canvas
         ref={canvasRef}
         style={{
@@ -187,37 +149,20 @@ const SnowEffectOnUploadedImage = () => {
         }}
       />
 
-      <div>
-        <label>
-          눈송이 크기:
-          <input
-            type="range"
-            min="0.1"
-            max="1"
-            step="0.1"
-            value={snowflakeSize}
-            onChange={(e) => setSnowflakeSize(e.target.value)}
-          />
-        </label>
-        <label>
-          눈송이 속도:
-          <input
-            type="range"
-            min="0.5"
-            max="5"
-            step="0.5"
-            value={snowflakeSpeed}
-            onChange={(e) => setSnowflakeSpeed(e.target.value)}
-          />
-        </label>
-        <label>
-          눈송이 색깔:
-          <input
-            type="color"
-            value={snowflakeColor}
-            onChange={(e) => setSnowflakeColor(e.target.value)}
-          />
-        </label>
+      <S.LabelContainer>
+        <SnowSizeControl
+          snowflakeSize={snowflakeSize}
+          setSnowflakeSize={setSnowflakeSize}
+        />
+        <SnowSpeedControl
+          snowflakeSpeed={snowflakeSpeed}
+          setSnowflakeSpeed={setSnowflakeSpeed}
+        />
+
+        <SnowColorControl
+          snowflakeColor={snowflakeColor}
+          setSnowflakeColor={setSnowflakeColor}
+        />
         <label>
           이미지로 눈 표시하기:
           <input
@@ -226,9 +171,16 @@ const SnowEffectOnUploadedImage = () => {
             onChange={() => setUseFlakeImage(!useFlakeImage)}
           />
         </label>
-        <button onClick={generateGIF}>Generate GIF</button>
-        {/* GIF 생성 버튼 */}
-      </div>
+        <GenerateGIFButton
+          canvasRef={canvasRef}
+          imageSize={imageSize}
+          image={image}
+          Flake={Flake}
+          snowflakeSize={snowflakeSize}
+          snowflakeSpeed={snowflakeSpeed}
+          snowflakeColor={snowflakeColor}
+        />
+      </S.LabelContainer>
     </div>
   );
 };
