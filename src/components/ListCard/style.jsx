@@ -1,5 +1,5 @@
-// style.jsx
 import styled from "styled-components";
+import CardImg from "../../assets/images/cardImg.png";
 
 export const ListContainer = styled.div`
   display: flex;
@@ -13,11 +13,14 @@ export const ListContainer = styled.div`
 `;
 
 export const CardContainer = styled.div`
-  width: 200px;
+  width: 315px;
   height: 200px;
   border: 1px solid black;
   border-radius: 10px;
   margin: 5px; // 카드 사이에 마진
   padding: 5px;
-  background-color: green;
+  /* background-color: green; */
+  background-image: url(${CardImg});
+  background-size: cover;
+  background-
 `;
