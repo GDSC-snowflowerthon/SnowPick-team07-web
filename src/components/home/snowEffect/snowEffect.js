@@ -1,5 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
-import GenerateGIFButton from "../button/GenerateGIFButton/GenerateGIFButton";
+import GenerateGIFButton from "../../button/GenerateGIFButton/GenerateGIFButton";
+import SnowSizeControl from "../label/SnowSizeControl";
+import SnowSpeedControl from "../label/SnowSpeedControl";
+import SnowColorControl from "../label/SnowColorControl";
 
 const SnowEffectOnUploadedImage = () => {
   const canvasRef = useRef(null);
@@ -138,36 +141,19 @@ const SnowEffectOnUploadedImage = () => {
       />
 
       <div>
-        <label>
-          눈송이 크기:
-          <input
-            type="range"
-            min="0.1"
-            max="1"
-            step="0.1"
-            value={snowflakeSize}
-            onChange={(e) => setSnowflakeSize(e.target.value)}
-          />
-        </label>
-        <label>
-          눈송이 속도:
-          <input
-            type="range"
-            min="0.5"
-            max="5"
-            step="0.5"
-            value={snowflakeSpeed}
-            onChange={(e) => setSnowflakeSpeed(e.target.value)}
-          />
-        </label>
-        <label>
-          눈송이 색깔:
-          <input
-            type="color"
-            value={snowflakeColor}
-            onChange={(e) => setSnowflakeColor(e.target.value)}
-          />
-        </label>
+        <SnowSizeControl
+          snowflakeSize={snowflakeSize}
+          setSnowflakeSize={setSnowflakeSize}
+        />
+        <SnowSpeedControl
+          snowflakeSpeed={snowflakeSpeed}
+          setSnowflakeSpeed={setSnowflakeSpeed}
+        />
+
+        <SnowColorControl
+          snowflakeColor={snowflakeColor}
+          setSnowflakeColor={setSnowflakeColor}
+        />
         <label>
           이미지로 눈 표시하기:
           <input
