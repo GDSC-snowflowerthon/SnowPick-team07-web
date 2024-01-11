@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import * as S from "./style";
 import GenerateGIFButton from "../../button/GenerateGIFButton/GenerateGIFButton";
 import SnowSizeControl from "../label/SnowSizeControl";
 import SnowSpeedControl from "../label/SnowSpeedControl";
@@ -129,8 +130,16 @@ const SnowEffectOnUploadedImage = () => {
 
   return (
     <div>
-      <input type="file" onChange={handleImageChange} />
-      <input type="file" onChange={handleFlakeImageChange} />
+      <S.FileInputContainer>
+        <S.InputContainer>
+          <label>이미지 업로드</label>
+          <S.StyledFileInput type="file" onChange={handleImageChange} />
+        </S.InputContainer>
+        <S.InputContainer>
+          <label>눈송이 이미지 업로드</label>
+          <S.StyledFileInput type="file" onChange={handleFlakeImageChange} />
+        </S.InputContainer>
+      </S.FileInputContainer>
       <canvas
         ref={canvasRef}
         style={{
@@ -140,7 +149,7 @@ const SnowEffectOnUploadedImage = () => {
         }}
       />
 
-      <div>
+      <S.LabelContainer>
         <SnowSizeControl
           snowflakeSize={snowflakeSize}
           setSnowflakeSize={setSnowflakeSize}
@@ -171,7 +180,7 @@ const SnowEffectOnUploadedImage = () => {
           snowflakeSpeed={snowflakeSpeed}
           snowflakeColor={snowflakeColor}
         />
-      </div>
+      </S.LabelContainer>
     </div>
   );
 };
