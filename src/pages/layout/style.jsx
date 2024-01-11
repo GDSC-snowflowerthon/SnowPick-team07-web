@@ -18,3 +18,13 @@ export const NavItemContainer = styled.nav`
 export const NavItem = styled.span`
   margin-right: 30px;
 `;
+
+export const FooterContainer = styled.div`
+  border: 1px solid skyblue;
+  height: 100px;
+`;
+
+export const BlodTitle = styled.p`
+  font-weight: bold;
+  font-size: 24px;
+`;
