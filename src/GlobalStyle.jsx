@@ -2,6 +2,8 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&family=Space+Mono&display=swap');
+
   * {
     margin: 0;
     padding: 0;
@@ -49,6 +51,11 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+
+body {
+	font-family: "Dongle", sans-serif;
+	font-size: 26px;
 }
 `;
 
