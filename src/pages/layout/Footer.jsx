@@ -3,7 +3,12 @@ import * as S from "./style";
 const Footer = () => {
   return (
     <div>
-      <span>Footer 내용입니다. 심심해서 만들어봄</span>
+      <span>동국톤 7팀 SnowPick입니다.</span>
+      <ol>
+        <li>김교휘</li>
+        <li>이창준</li>
+        <li>최상원</li>
+      </ol>
     </div>
   );
 };
