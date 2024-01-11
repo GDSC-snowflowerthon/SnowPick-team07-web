@@ -4,7 +4,7 @@ import NavBar from "../layout/Navbar";
 const HomePage = () => {
   return (
     <div>
-      <NavBar />
+      {/* <NavBar /> */}
       <SnowEffectOnUploadedImage />
     </div>
   );

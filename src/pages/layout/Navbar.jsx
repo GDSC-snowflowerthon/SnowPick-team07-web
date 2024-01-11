@@ -1,12 +1,17 @@
 import * as S from "./style";
+import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
   return (
     <S.NavContainer>
       <h1>상단 네브바</h1>
       <S.NavItemContainer>
-        <S.NavItem>Meun1</S.NavItem>
-        <S.NavItem>Meun2</S.NavItem>
+        <NavLink to="/">
+          <S.NavItem>Menu1</S.NavItem>
+        </NavLink>
+        <NavLink to="/list">
+          <S.NavItem>Menu2</S.NavItem>
+        </NavLink>
       </S.NavItemContainer>
     </S.NavContainer>
   );
