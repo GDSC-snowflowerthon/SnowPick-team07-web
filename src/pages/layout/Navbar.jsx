@@ -7,10 +7,10 @@ const NavBar = () => {
       <h1>상단 네브바</h1>
       <S.NavItemContainer>
         <NavLink to="/">
-          <S.NavItem>Menu1</S.NavItem>
+          <S.NavItem>Home</S.NavItem>
         </NavLink>
         <NavLink to="/list">
-          <S.NavItem>Menu2</S.NavItem>
+          <S.NavItem>ImageList</S.NavItem>
         </NavLink>
       </S.NavItemContainer>
     </S.NavContainer>
