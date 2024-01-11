@@ -16,5 +16,8 @@ export const CardContainer = styled.div`
   width: 200px;
   height: 200px;
   border: 1px solid black;
+  border-radius: 10px;
   margin: 5px; // 카드 사이에 마진
+  padding: 5px;
+  background-color: green;
 `;

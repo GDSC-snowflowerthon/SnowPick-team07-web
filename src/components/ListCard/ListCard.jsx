@@ -26,9 +26,6 @@ const ListCard = () => {
       <S.CardContainer onClick={() => handleClickCard("image1.jpg")}>
         List Card 1
       </S.CardContainer>
-      <S.CardContainer onClick={() => handleClickCard("image2.jpg")}>
-        List Card 2
-      </S.CardContainer>
 
       {showDownloadPopup && (
         <DownloadPopup onDownload={handleDownload} onCancel={handleCancel} />

@@ -7,8 +7,10 @@ const DownloadPopup = ({ onDownload, onCancel }) => {
     <S.PopupOverlay>
       <S.PopupContainer>
         <p>이미지를 다운로드 하시겠습니까?</p>
-        <button onClick={onDownload}>다운로드</button>
-        <button onClick={onCancel}>취소</button>
+        <S.ButtonConatiner>
+          <S.Button onClick={onDownload}>다운로드</S.Button>
+          <S.Button onClick={onCancel}>취소</S.Button>
+        </S.ButtonConatiner>
       </S.PopupContainer>
     </S.PopupOverlay>
   );
