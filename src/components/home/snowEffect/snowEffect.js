@@ -20,6 +20,9 @@ const SnowEffectOnUploadedImage = () => {
     "rgba(255, 255, 255, 1)"
   ); // 눈송이 색깔
 
+  const STANDARD_WIDTH = 800;
+  const STANDARD_HEIGHT = 600;
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -27,7 +30,14 @@ const SnowEffectOnUploadedImage = () => {
       reader.onload = (e) => {
         const img = new Image();
         img.onload = () => {
-          setImageSize({ width: img.width, height: img.height });
+          let ratio = Math.min(
+            STANDARD_WIDTH / img.width,
+            STANDARD_HEIGHT / img.height
+          );
+          let newWidth = img.width * ratio;
+          let newHeight = img.height * ratio;
+
+          setImageSize({ width: newWidth, height: newHeight });
           setImage(img);
         };
         img.src = e.target.result;
@@ -35,6 +45,21 @@ const SnowEffectOnUploadedImage = () => {
       reader.readAsDataURL(file);
     }
   };
+  // const handleImageChange = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = (e) => {
+  //       const img = new Image();
+  //       img.onload = () => {
+  //         setImageSize({ width: img.width, height: img.height });
+  //         setImage(img);
+  //       };
+  //       img.src = e.target.result;
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   const handleFlakeImageChange = (event) => {
     const file = event.target.files[0];
