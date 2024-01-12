@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as S from "./style";
-import DownloadPopup from "../Popup/DownloadPopup";
+import ImageDownloadPopup from "../Popup/ImageDownloadPopup";
 
 const GifListCard = () => {
   const [showDownloadPopup, setShowDownloadPopup] = useState(false);
@@ -39,7 +39,10 @@ const GifListCard = () => {
       </S.GifListContiner>
 
       {showDownloadPopup && (
-        <DownloadPopup onDownload={handleDownload} onCancel={handleCancel} />
+        <ImageDownloadPopup
+          onDownload={handleDownload}
+          onCancel={handleCancel}
+        />
       )}
     </S.ListContainer>
   );

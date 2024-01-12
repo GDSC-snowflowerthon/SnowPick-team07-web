@@ -2,7 +2,7 @@
 import React from "react";
 import * as S from "./style";
 
-const DownloadPopup = ({ onDownload, onCancel }) => {
+const ImageDownloadPopup = ({ onDownload, onCancel }) => {
   return (
     <S.PopupOverlay>
       <S.PopupContainer>
@@ -17,4 +17,4 @@ const DownloadPopup = ({ onDownload, onCancel }) => {
   );
 };
 
-export default DownloadPopup;
+export default ImageDownloadPopup;
