@@ -20,9 +20,10 @@ export const InputContainer = styled.div`
 
 export const LabelContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
+  padding-top: 14px;
 `;
 
 // 파일 업로드 버튼 스타일
@@ -52,5 +53,12 @@ export const StyledFileInput = styled.input.attrs({ type: "file" })`
 export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
+`;
+
+export const LabelBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* width: 300px;
+  height: 200px; */
 `;

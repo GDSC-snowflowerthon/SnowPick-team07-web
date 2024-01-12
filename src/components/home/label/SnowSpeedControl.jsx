@@ -1,10 +1,11 @@
 import React from "react";
+import * as S from "./style";
 
 const SnowSpeedControl = ({ snowflakeSpeed, setSnowflakeSpeed }) => {
   return (
     <label>
       눈송이 속도:
-      <input
+      <S.Input
         type="range"
         min="0.5"
         max="5"
