@@ -27,9 +27,8 @@ export const CardContainer = styled.div`
 `;
 
 export const GifCardContainer = styled.div`
-  width: 500px;
-  height: 5px;
-  /* border: 1px solid black; */
+  width: 620px;
+  height: 400px;
   border-radius: 10px;
   margin: 5px; // 카드 사이에 마진
   /* padding: 5px; */
@@ -37,7 +36,22 @@ export const GifCardContainer = styled.div`
   background-size: cover;
   background-position: center;
   repeat: no-repeat;
-  border: 1px solid red;
+`;
+
+export const ImageContainer = styled.img`
+  align-items: center;
+  justify-content: center;
+  margin: 26px 16px;
+  width: 210px;
+  height: 135px;
+`;
+
+export const GifImageContainer = styled.img`
+  align-items: center;
+  justify-content: center;
+  margin: 68px 42px;
+  width: 452px;
+  height: 286px;
 `;
 
 export const ListRowContainer = styled.div`
@@ -46,25 +60,10 @@ export const ListRowContainer = styled.div`
   align-items: flex-start;
   justify-content: center;
   height: auto;
-  /* overflow-y: auto; */
   margin-left: 50px;
   margin-top: 40px;
 `;
 
-export const ImageContainer = styled.img`
-  align-items: center;
-  justify-content: center;
-  margin: 26px 16px;
-  background-color: yellow;
-  width: 210px;
-  height: 135px;
-`;
-
-export const GifImageContainer = styled.img`
-  align-items: center;
-  justify-content: center;
-  margin: 26px 16px;
-  background-color: yellow;
-  width: 210px;
-  height: 135px;
+export const GifListContiner = styled(ListRowContainer)`
+  margin-left: 85px;
 `;

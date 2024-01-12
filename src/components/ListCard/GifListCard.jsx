@@ -23,11 +23,20 @@ const GifListCard = () => {
 
   return (
     <S.ListContainer>
-      <S.ListRowContainer>
+      <S.GifListContiner>
         <S.GifCardContainer onClick={() => handleClickCard("image1.jpg")}>
           <S.GifImageContainer src="" />
         </S.GifCardContainer>
-      </S.ListRowContainer>
+        <S.GifCardContainer onClick={() => handleClickCard("image1.jpg")}>
+          <S.GifImageContainer src="" />
+        </S.GifCardContainer>
+        <S.GifCardContainer onClick={() => handleClickCard("image1.jpg")}>
+          <S.GifImageContainer src="" />
+        </S.GifCardContainer>
+        <S.GifCardContainer onClick={() => handleClickCard("image1.jpg")}>
+          <S.GifImageContainer src="" />
+        </S.GifCardContainer>
+      </S.GifListContiner>
 
       {showDownloadPopup && (
         <DownloadPopup onDownload={handleDownload} onCancel={handleCancel} />
