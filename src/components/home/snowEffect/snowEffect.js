@@ -141,7 +141,7 @@ const SnowEffectOnUploadedImage = () => {
   }
 
   return (
-    <div>
+    <S.Container>
       <S.FileInputContainer>
         <S.InputContainer>
           <label>이미지 업로드</label>
@@ -193,7 +193,7 @@ const SnowEffectOnUploadedImage = () => {
           snowflakeColor={snowflakeColor}
         />
       </S.LabelContainer>
-    </div>
+    </S.Container>
   );
 };
 
