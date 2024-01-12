@@ -8,7 +8,6 @@ export const ListContainer = styled.div`
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: center;
-
   overflow-y: scroll;
   padding: 10px; // 컨테이너 내부에 패딩
   gap: 10px; // 카드 사이에 간격
@@ -28,14 +27,14 @@ export const CardContainer = styled.div`
 `;
 
 export const ListRowContainer = styled.div`
-  witdh: 800px;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: center;
   height: auto;
-  overflow-y: auto;
-  margin-left: 60px;
+  /* overflow-y: auto; */
+  margin-left: 50px;
+  margin-top: 40px;
 `;
 
 export const ImageContainer = styled.img`
