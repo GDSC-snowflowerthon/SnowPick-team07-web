@@ -36,8 +36,8 @@ const GifDownloadPopup = ({ gifUrl, onDownload, onCancel, onShare }) => {
         <S.ButtonConatiner>
           <S.Button onClick={handleDownloadClick}>다운로드</S.Button>
           <S.Button onClick={handleShareClick}>공유하기</S.Button>
+          <S.Button onClick={onCancel}>닫기</S.Button>
         </S.ButtonConatiner>
-        <button onClick={onCancel}>닫기</button>
       </S.PopupContainer>
     </S.PopupOverlay>
   );

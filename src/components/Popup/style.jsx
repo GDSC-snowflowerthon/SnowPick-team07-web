@@ -47,7 +47,7 @@ export const ButtonConatiner = styled.div`
 
 // 각 버튼 개체
 export const Button = styled.button`
-  width: 130px;
+  width: 90px;
   height: 30px;
   font-size: 14px;
   border: 0px;
