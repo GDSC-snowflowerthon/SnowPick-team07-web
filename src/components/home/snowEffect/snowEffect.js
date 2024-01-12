@@ -12,6 +12,7 @@ const SnowEffectOnUploadedImage = () => {
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
   const [flakeImage, setFlakeImage] = useState(null);
 
+  // 눈송이 이미지를 넣었는지 여부
   const [useFlakeImage, setUseFlakeImage] = useState(true);
 
   // 사용자 설정을 위한 상태
@@ -183,15 +184,16 @@ const SnowEffectOnUploadedImage = () => {
       </div>
 
       <S.LabelContainer>
-        <SnowSizeControl
-          snowflakeSize={snowflakeSize}
-          setSnowflakeSize={setSnowflakeSize}
-        />
-        <SnowSpeedControl
-          snowflakeSpeed={snowflakeSpeed}
-          setSnowflakeSpeed={setSnowflakeSpeed}
-        />
-
+        <S.LabelBox>
+          <SnowSizeControl
+            snowflakeSize={snowflakeSize}
+            setSnowflakeSize={setSnowflakeSize}
+          />
+          <SnowSpeedControl
+            snowflakeSpeed={snowflakeSpeed}
+            setSnowflakeSpeed={setSnowflakeSpeed}
+          />
+        </S.LabelBox>
         <SnowColorControl
           snowflakeColor={snowflakeColor}
           setSnowflakeColor={setSnowflakeColor}
@@ -204,23 +206,23 @@ const SnowEffectOnUploadedImage = () => {
             onChange={() => setUseFlakeImage(!useFlakeImage)}
           />
         </label>
-        <S.ButtonContainer>
-          {image && ( // 이미지가 있을 때만 공유 & 다운로드 버튼 렌더링
-            <>
-              <ShareSnowButton flakeImage={flakeImage} />
-              <GenerateGIFButton
-                canvasRef={canvasRef}
-                imageSize={imageSize}
-                image={image}
-                Flake={Flake}
-                snowflakeSize={snowflakeSize}
-                snowflakeSpeed={snowflakeSpeed}
-                snowflakeColor={snowflakeColor}
-              />
-            </>
-          )}
-        </S.ButtonContainer>
       </S.LabelContainer>
+      <S.ButtonContainer>
+        {image && ( // 이미지가 있을 때만 공유 & 다운로드 버튼 렌더링
+          <>
+            <ShareSnowButton flakeImage={flakeImage} />
+            <GenerateGIFButton
+              canvasRef={canvasRef}
+              imageSize={imageSize}
+              image={image}
+              Flake={Flake}
+              snowflakeSize={snowflakeSize}
+              snowflakeSpeed={snowflakeSpeed}
+              snowflakeColor={snowflakeColor}
+            />
+          </>
+        )}
+      </S.ButtonContainer>
     </S.Container>
   );
 };

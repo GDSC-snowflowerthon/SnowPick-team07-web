@@ -1,10 +1,11 @@
 import React from "react";
+import * as S from "./style";
 
 const SnowflakeSizeControl = ({ snowflakeSize, setSnowflakeSize }) => {
   return (
     <label>
       눈송이 크기:
-      <input
+      <S.Input
         type="range"
         min="0.1"
         max="1"
