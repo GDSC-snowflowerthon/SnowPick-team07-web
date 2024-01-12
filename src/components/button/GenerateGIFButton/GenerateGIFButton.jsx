@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import instance from "../../../api/axios";
 import * as S from "./style";
 import GIF from "gif.js";
 import GifDownloadPopup from "../../Popup/GifDownloadPopup";
@@ -12,6 +11,7 @@ const GenerateGIFButton = ({
   snowflakeSize,
   snowflakeSpeed,
   snowflakeColor,
+  setLoading,
 }) => {
   const [showDownloadPopup, setShowDownloadPopup] = useState(false);
   const [gifUrl, setGifUrl] = useState(null); // PC에서 다운로드용 상태
@@ -88,20 +88,22 @@ const GenerateGIFButton = ({
   // gif post 함수
   const uploadGIF = async () => {
     if (!gifBlob) return;
-
+    setLoading(true);
     const formData = new FormData();
     formData.append("gif", gifBlob, "snow_effect.gif");
 
     try {
-      const response = await instance.post("/api/v1/gif", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const response = await fetch(process.env.REACT_APP_API + "/gif", {
+        method: "POST",
+        body: formData,
       });
+
       console.log("res를 보자" + response.statusCode);
       // 업로드 성공 후 로직
       console.log("GIF 업로드 성공:", response.data);
       console.log("GIF 업로드 status:", response.status);
+      setLoading(false);
+      setShowDownloadPopup(false);
     } catch (error) {
       // 업로드 실패 로직
       console.error("GIF 업로드 실패:", error);
@@ -115,6 +117,7 @@ const GenerateGIFButton = ({
       </S.GenerateButton>
       {showDownloadPopup && (
         <GifDownloadPopup
+          setLoading={setLoading}
           gifUrl={gifUrl}
           onDownload={handleDownload}
           onCancel={handleCancel}
