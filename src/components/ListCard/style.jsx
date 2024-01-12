@@ -26,6 +26,20 @@ export const CardContainer = styled.div`
   background-position: center;
 `;
 
+export const GifCardContainer = styled.div`
+  width: 500px;
+  height: 5px;
+  /* border: 1px solid black; */
+  border-radius: 10px;
+  margin: 5px; // 카드 사이에 마진
+  /* padding: 5px; */
+  background-image: url(${CardImg});
+  background-size: cover;
+  background-position: center;
+  repeat: no-repeat;
+  border: 1px solid red;
+`;
+
 export const ListRowContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -38,6 +52,15 @@ export const ListRowContainer = styled.div`
 `;
 
 export const ImageContainer = styled.img`
+  align-items: center;
+  justify-content: center;
+  margin: 26px 16px;
+  background-color: yellow;
+  width: 210px;
+  height: 135px;
+`;
+
+export const GifImageContainer = styled.img`
   align-items: center;
   justify-content: center;
   margin: 26px 16px;
