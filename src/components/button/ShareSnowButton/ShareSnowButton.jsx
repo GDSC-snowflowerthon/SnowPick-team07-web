@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import instance from "../../../api/axios";
 import * as S from "./style";
 import GIF from "gif.js";
 import GifDownloadPopup from "../../Popup/GifDownloadPopup";
@@ -14,6 +15,7 @@ const ShareSnowButton = ({
 }) => {
   const [showDownloadPopup, setShowDownloadPopup] = useState(false);
   const [gifUrl, setGifUrl] = useState(null);
+  const [gifBlob, setGifBlob] = useState(null); // gif blob 상태 추가
 
   const generateGIF = () => {
     if (!canvasRef.current || !image) {
@@ -37,16 +39,13 @@ const ShareSnowButton = ({
 
     gif.on("finished", function (blob) {
       const url = URL.createObjectURL(blob);
+      setGifBlob(blob); // 여기서 상태를 업데이트합니다.
       // 팝업에 props로 보낼 gifUrl에 값 넣기
       setGifUrl(url);
 
       // 다운로드 링크 생성
       const downloadLink = document.createElement("a");
       downloadLink.href = url;
-      // downloadLink.download = "snow_effect.gif"; // 다운로드되는 파일의 이름
-      // downloadLink.text = "Download GIF"; // 링크 텍스트
-      // downloadLink.style.display = "block"; // 링크를 보이게 설정
-      // document.body.appendChild(downloadLink); // 링크를 문서에 추가
     });
 
     const drawFrame = () => {
@@ -84,6 +83,28 @@ const ShareSnowButton = ({
     setShowDownloadPopup(false); // 팝업 noShow
   };
 
+  const uploadGIF = () => {
+    console.log("Test");
+    alert("api 시작");
+    if (!gifBlob) return;
+
+    const formData = new FormData();
+    formData.append("gif", gifBlob, "snow_effect.gif");
+
+    try {
+      const response = instance.post("/api/v1/gif", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      // 업로드 성공 후 로직
+      console.log("GIF 업로드 성공:", response.data);
+    } catch (error) {
+      // 업로드 실패 로직
+      console.error("GIF 업로드 실패:", error);
+    }
+  };
+
   return (
     <>
       <S.GenerateButton onClick={generateGIF}>눈송이 공유하기</S.GenerateButton>
@@ -92,6 +113,7 @@ const ShareSnowButton = ({
           gifUrl={gifUrl}
           onDownload={handleDownload}
           onCancel={handleCancel}
+          onShare={uploadGIF}
         />
       )}
     </>

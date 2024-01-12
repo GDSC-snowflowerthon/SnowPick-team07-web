@@ -150,6 +150,9 @@ const SnowEffectOnUploadedImage = () => {
         ctx.fill();
       }
     };
+    // if (image) {
+    //   alert("이미지 있는뎅");
+    // }
   }
 
   return (
@@ -213,7 +216,6 @@ const SnowEffectOnUploadedImage = () => {
                 snowflakeSize={snowflakeSize}
                 snowflakeSpeed={snowflakeSpeed}
                 snowflakeColor={snowflakeColor}
-                setSnowflakeSpeed={setSnowflakeSpeed}
               />
             </>
           )}
