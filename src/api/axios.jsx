@@ -1,12 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_SERVER_HOST,
-  //   withCredentials: true,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  baseURL: "http://ec2-3-34-188-34.ap-northeast-2.compute.amazonaws.com:8080",
 });
 
 export default instance;
-햣;

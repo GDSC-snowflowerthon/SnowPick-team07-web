@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import instance from "../../../api/axios";
 import * as S from "./style";
 import GIF from "gif.js";
 import GifDownloadPopup from "../../Popup/GifDownloadPopup";
@@ -13,7 +14,8 @@ const GenerateGIFButton = ({
   snowflakeColor,
 }) => {
   const [showDownloadPopup, setShowDownloadPopup] = useState(false);
-  const [gifUrl, setGifUrl] = useState(null);
+  const [gifUrl, setGifUrl] = useState(null); // PC에서 다운로드용 상태
+  const [gifBlob, setGifBlob] = useState(null); // gif blob 상태
 
   const generateGIF = () => {
     if (!canvasRef.current || !image) {
@@ -36,6 +38,8 @@ const GenerateGIFButton = ({
     const snowflakes = createSnowflakes(increasedSpeed);
 
     gif.on("finished", function (blob) {
+      // 공유하기 POST로 보낼 gifBlob 업데이트
+      setGifBlob(blob);
       const url = URL.createObjectURL(blob);
       // 팝업에 props로 보낼 gifUrl에 값 넣기
       setGifUrl(url);
@@ -43,10 +47,6 @@ const GenerateGIFButton = ({
       // 다운로드 링크 생성
       const downloadLink = document.createElement("a");
       downloadLink.href = url;
-      // downloadLink.download = "snow_effect.gif"; // 다운로드되는 파일의 이름
-      // downloadLink.text = "Download GIF"; // 링크 텍스트
-      // downloadLink.style.display = "block"; // 링크를 보이게 설정
-      // document.body.appendChild(downloadLink); // 링크를 문서에 추가
     });
 
     const drawFrame = () => {
@@ -65,6 +65,7 @@ const GenerateGIFButton = ({
 
     gif.render();
   };
+
   const createSnowflakes = (speed) => {
     const flakes = [];
     for (let i = 0; i < 600; i++) {
@@ -84,6 +85,29 @@ const GenerateGIFButton = ({
     setShowDownloadPopup(false); // 팝업 noShow
   };
 
+  // gif post 함수
+  const uploadGIF = async () => {
+    if (!gifBlob) return;
+
+    const formData = new FormData();
+    formData.append("gif", gifBlob, "snow_effect.gif");
+
+    try {
+      const response = await instance.post("/api/v1/gif", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("res를 보자" + response.statusCode);
+      // 업로드 성공 후 로직
+      console.log("GIF 업로드 성공:", response.data);
+      console.log("GIF 업로드 status:", response.status);
+    } catch (error) {
+      // 업로드 실패 로직
+      console.error("GIF 업로드 실패:", error);
+    }
+  };
+
   return (
     <>
       <S.GenerateButton onClick={generateGIF}>
@@ -94,6 +118,7 @@ const GenerateGIFButton = ({
           gifUrl={gifUrl}
           onDownload={handleDownload}
           onCancel={handleCancel}
+          onShare={uploadGIF}
         />
       )}
     </>

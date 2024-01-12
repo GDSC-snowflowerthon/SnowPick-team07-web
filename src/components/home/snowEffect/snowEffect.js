@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import * as S from "./style";
 import GenerateGIFButton from "../../button/GenerateGIFButton/GenerateGIFButton";
+import ShareSnowButton from "../../button/ShareSnowButton/ShareSnowButton";
 import SnowSizeControl from "../label/SnowSizeControl";
 import SnowSpeedControl from "../label/SnowSpeedControl";
 import SnowColorControl from "../label/SnowColorControl";
@@ -149,6 +150,9 @@ const SnowEffectOnUploadedImage = () => {
         ctx.fill();
       }
     };
+    // if (image) {
+    //   alert("이미지 있는뎅");
+    // }
   }
 
   return (
@@ -200,16 +204,22 @@ const SnowEffectOnUploadedImage = () => {
             onChange={() => setUseFlakeImage(!useFlakeImage)}
           />
         </label>
-        <GenerateGIFButton
-          canvasRef={canvasRef}
-          imageSize={imageSize}
-          image={image}
-          Flake={Flake}
-          snowflakeSize={snowflakeSize}
-          snowflakeSpeed={snowflakeSpeed}
-          snowflakeColor={snowflakeColor}
-          setSnowflakeSpeed={setSnowflakeSpeed}
-        />
+        <S.ButtonContainer>
+          {image && ( // 이미지가 있을 때만 공유 & 다운로드 버튼 렌더링
+            <>
+              <ShareSnowButton flakeImage={flakeImage} />
+              <GenerateGIFButton
+                canvasRef={canvasRef}
+                imageSize={imageSize}
+                image={image}
+                Flake={Flake}
+                snowflakeSize={snowflakeSize}
+                snowflakeSpeed={snowflakeSpeed}
+                snowflakeColor={snowflakeColor}
+              />
+            </>
+          )}
+        </S.ButtonContainer>
       </S.LabelContainer>
     </S.Container>
   );
