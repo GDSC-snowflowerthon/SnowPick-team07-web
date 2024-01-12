@@ -31,7 +31,9 @@ const GenerateGIFButton = ({
     });
 
     const ctx = canvasRef.current.getContext("2d");
-    const snowflakes = createSnowflakes();
+    const originalSpeed = snowflakeSpeed;
+    const increasedSpeed = originalSpeed * 6;
+    const snowflakes = createSnowflakes(increasedSpeed);
 
     gif.on("finished", function (blob) {
       const url = URL.createObjectURL(blob);
@@ -56,18 +58,17 @@ const GenerateGIFButton = ({
       });
     };
 
-    for (let i = 0; i < 20; i++) {
-      drawFrame();
-      gif.addFrame(canvasRef.current, { copy: true, delay: 200 });
+    for (let i = 0; i < 50; i++) {
+      drawFrame(snowflakes); // 증가된 속도의 눈송이 사용
+      gif.addFrame(canvasRef.current, { copy: true, delay: 2 });
     }
 
     gif.render();
   };
-
-  const createSnowflakes = () => {
+  const createSnowflakes = (speed) => {
     const flakes = [];
     for (let i = 0; i < 600; i++) {
-      flakes.push(new Flake(snowflakeSize, snowflakeSpeed, snowflakeColor));
+      flakes.push(new Flake(snowflakeSize, speed, snowflakeColor));
     }
     return flakes;
   };
