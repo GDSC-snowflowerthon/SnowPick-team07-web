@@ -41,10 +41,10 @@ const GenerateGIFButton = ({
       // 다운로드 링크 생성
       const downloadLink = document.createElement("a");
       downloadLink.href = url;
-      downloadLink.download = "snow_effect.gif"; // 다운로드되는 파일의 이름
-      downloadLink.text = "Download GIF"; // 링크 텍스트
-      downloadLink.style.display = "block"; // 링크를 보이게 설정
-      document.body.appendChild(downloadLink); // 링크를 문서에 추가
+      // downloadLink.download = "snow_effect.gif"; // 다운로드되는 파일의 이름
+      // downloadLink.text = "Download GIF"; // 링크 텍스트
+      // downloadLink.style.display = "block"; // 링크를 보이게 설정
+      // document.body.appendChild(downloadLink); // 링크를 문서에 추가
     });
 
     const drawFrame = () => {
