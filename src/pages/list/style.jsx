@@ -5,9 +5,5 @@ import BackgroundImage from "../../assets/images/backgroundImg.png";
 export const ListPageContainer = styled.div`
   background-image: url(${BackgroundImage});
   background-size: cover;
+  /* background-position: center; */
 `;
-
-// export const CardContainer = styled.div`
-//   background-image: url(${CardImg});
-//   background-size: cover;
-// `;
