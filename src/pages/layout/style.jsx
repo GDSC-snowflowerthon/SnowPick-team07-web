@@ -5,7 +5,7 @@ export const NavContainer = styled.div`
   height: 75px;
   padding: 1rem;
   color: white;
-  background: teal;
+  background-color: rgba(255, 255, 255, 0.7);
   font-weight: bold;
   display: flex;
   justify-content: space-between;
@@ -16,33 +16,40 @@ export const NavItemContainer = styled.nav`
   margin-right: 30px;
 `;
 
+export const NavHeaderText = styled.div`
+  font-size: 44px;
+  color: black;
+`;
+
 export const StyledNavLink = styled(NavLink)`
   margin-right: 30px;
-  text-decoration: none; // 밑줄 제거
-  color: inherit; // 부모 요소의 색상 상속
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 5px;
 
   &:hover {
-    text-decoration: none; // 마우스 오버 시 밑줄 제거
-    color: blue; // 마우스 오버 시 색상 유지
+    text-decoration: none;
+    background-color: lightgray;
   }
 
   &.active {
-    color: black; // 활성화된 링크의 색상 유지
+    background-color: skyblue;
+    color: black;
   }
 `;
 
 export const NavItem = styled.span`
   margin-right: 30px;
-  text-decoration: none; // 밑줄 제거
-  color: inherit; // 부모 요소의 색상 상속
+  text-decoration: none;
+  color: inherit;
 
   &:hover {
-    text-decoration: none; // 마우스 오버 시 밑줄 제거
-    color: inherit; // 마우스 오버 시 색상 유지
+    text-decoration: none;
+    color: inherit;
   }
 
   &.active {
-    color: inherit; // 활성화된 링크의 색상 유지
+    color: inherit;
   }
 `;
 

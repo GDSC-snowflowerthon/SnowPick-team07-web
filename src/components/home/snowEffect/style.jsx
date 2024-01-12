@@ -1,5 +1,11 @@
 import styled from "styled-components";
 
+export const Container = styled.div`
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+`;
+
 export const FileInputContainer = styled.div`
   display: flex;
   justify-content: space-around;
