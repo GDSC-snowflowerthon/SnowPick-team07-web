@@ -6,6 +6,7 @@ import SnowSizeControl from "../label/SnowSizeControl";
 import SnowSpeedControl from "../label/SnowSpeedControl";
 import SnowColorControl from "../label/SnowColorControl";
 import AWS from "aws-sdk";
+import LoadingModal from "../../loading/Loading";
 
 const S3_BUCKET = "snowpickbucket";
 const REGION = "ap-northeast-2";
@@ -17,11 +18,6 @@ AWS.config.update({
   params: { Bucket: S3_BUCKET },
 });
 
-// accessKeyId: config.accessKeyId,
-//     secretAccessKey: config.secretAccessKey,
-//     region: config.region,
-//     params: {Bucket: config.bucket},
-//     httpOptions: {timeout: 1000},
 const myBucket = new AWS.S3({
   params: { Bucket: S3_BUCKET },
   region: REGION,
@@ -40,6 +36,8 @@ const SnowEffectOnUploadedImage = () => {
   const [flakeImage, setFlakeImage] = useState(null);
 
   // 눈송이 이미지를 넣었는지 여부
+  const [loading, setLoading] = useState(false);
+
   const [useFlakeImage, setUseFlakeImage] = useState(true);
 
   // 사용자 설정을 위한 상태
@@ -79,6 +77,7 @@ const SnowEffectOnUploadedImage = () => {
 
   const handleFlakeImageChange = (event) => {
     const file = event.target.files[0];
+    setImage1(file);
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -97,6 +96,11 @@ const SnowEffectOnUploadedImage = () => {
       Bucket: S3_BUCKET,
       Key: "custom/" + file.name,
     };
+
+    // myBucket.putObject(params).send((err, data) => {
+    //   if (err) console.log(err);
+    //   else console.log(data);
+    // });
 
     myBucket
       .putObject(params)
@@ -198,9 +202,6 @@ const SnowEffectOnUploadedImage = () => {
         ctx.fill();
       }
     };
-    // if (image) {
-    //   alert("이미지 있는뎅");
-    // }
   }
 
   return (
@@ -253,23 +254,25 @@ const SnowEffectOnUploadedImage = () => {
             onChange={() => setUseFlakeImage(!useFlakeImage)}
           />
         </label>
+        <S.ButtonContainer>
+          {image && ( // 이미지가 있을 때만 공유 & 다운로드 버튼 렌더링
+            <>
+              <ShareSnowButton flakeImage={image1} setLoading={setLoading} />
+              <GenerateGIFButton
+                setLoading={setLoading}
+                canvasRef={canvasRef}
+                imageSize={imageSize}
+                image={image}
+                Flake={Flake}
+                snowflakeSize={snowflakeSize}
+                snowflakeSpeed={snowflakeSpeed}
+                snowflakeColor={snowflakeColor}
+              />
+            </>
+          )}
+        </S.ButtonContainer>
       </S.LabelContainer>
-      <S.ButtonContainer>
-        {image && ( // 이미지가 있을 때만 공유 & 다운로드 버튼 렌더링
-          <>
-            <ShareSnowButton flakeImage={flakeImage} />
-            <GenerateGIFButton
-              canvasRef={canvasRef}
-              imageSize={imageSize}
-              image={image}
-              Flake={Flake}
-              snowflakeSize={snowflakeSize}
-              snowflakeSpeed={snowflakeSpeed}
-              snowflakeColor={snowflakeColor}
-            />
-          </>
-        )}
-      </S.ButtonContainer>
+      {loading && <LoadingModal />}
     </S.Container>
   );
 };
