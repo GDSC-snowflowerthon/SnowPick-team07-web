@@ -118,7 +118,19 @@ const SnowEffectOnUploadedImage = () => {
 
     this.draw = function (ctx) {
       if (useFlakeImage && flakeImage) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(
+          this.x + this.size / 2,
+          this.y + this.size / 2,
+          this.size / 2,
+          0,
+          Math.PI * 2
+        );
+        ctx.clip();
+
         ctx.drawImage(flakeImage, this.x, this.y, this.size, this.size);
+        ctx.restore();
       } else {
         ctx.fillStyle = snowflakeColor;
         ctx.beginPath();
