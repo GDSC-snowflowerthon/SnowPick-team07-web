@@ -84,7 +84,6 @@ const SnowEffectOnUploadedImage = () => {
       }
       requestId = requestAnimationFrame(draw);
     }
-
     draw();
 
     return () => {
