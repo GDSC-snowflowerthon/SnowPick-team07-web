@@ -207,7 +207,7 @@ const SnowEffectOnUploadedImage = () => {
         <S.ButtonContainer>
           {image && ( // 이미지가 있을 때만 공유 & 다운로드 버튼 렌더링
             <>
-              <ShareSnowButton />
+              <ShareSnowButton flakeImage={flakeImage} />
               <GenerateGIFButton
                 canvasRef={canvasRef}
                 imageSize={imageSize}
