@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as S from "./style";
 import DownloadPopup from "../Popup/DownloadPopup";
 
-const ListCard = () => {
+const GifListCard = () => {
   const [showDownloadPopup, setShowDownloadPopup] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
 
@@ -23,23 +23,20 @@ const ListCard = () => {
 
   return (
     <S.ListContainer>
-      <S.ListRowContainer>
-        <S.CardContainer onClick={() => handleClickCard("image1.jpg")}>
-          <S.ImageContainer src="" />
-        </S.CardContainer>
-        <S.CardContainer onClick={() => handleClickCard("image1.jpg")}>
-          <S.ImageContainer src="" />
-        </S.CardContainer>
-        <S.CardContainer onClick={() => handleClickCard("image1.jpg")}>
-          <S.ImageContainer src="" />
-        </S.CardContainer>
-        <S.CardContainer onClick={() => handleClickCard("image1.jpg")}>
-          <S.ImageContainer src="" />
-        </S.CardContainer>
-        <S.CardContainer onClick={() => handleClickCard("image1.jpg")}>
-          <S.ImageContainer src="" />
-        </S.CardContainer>
-      </S.ListRowContainer>
+      <S.GifListContiner>
+        <S.GifCardContainer onClick={() => handleClickCard("image1.jpg")}>
+          <S.GifImageContainer src="" />
+        </S.GifCardContainer>
+        <S.GifCardContainer onClick={() => handleClickCard("image1.jpg")}>
+          <S.GifImageContainer src="" />
+        </S.GifCardContainer>
+        <S.GifCardContainer onClick={() => handleClickCard("image1.jpg")}>
+          <S.GifImageContainer src="" />
+        </S.GifCardContainer>
+        <S.GifCardContainer onClick={() => handleClickCard("image1.jpg")}>
+          <S.GifImageContainer src="" />
+        </S.GifCardContainer>
+      </S.GifListContiner>
 
       {showDownloadPopup && (
         <DownloadPopup onDownload={handleDownload} onCancel={handleCancel} />
@@ -48,4 +45,4 @@ const ListCard = () => {
   );
 };
 
-export default ListCard;
+export default GifListCard;
