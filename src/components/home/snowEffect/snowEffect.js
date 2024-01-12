@@ -20,23 +20,25 @@ const SnowEffectOnUploadedImage = () => {
     "rgba(255, 255, 255, 1)"
   ); // 눈송이 색깔
 
-  const STANDARD_WIDTH = 800;
-  const STANDARD_HEIGHT = 600;
+  const STANDARD_WIDTH = 500;
+  const STANDARD_HEIGHT = 500;
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
+
       reader.onload = (e) => {
         const img = new Image();
         img.onload = () => {
+          console.log(img.width, img.height);
           let ratio = Math.min(
             STANDARD_WIDTH / img.width,
             STANDARD_HEIGHT / img.height
           );
           let newWidth = img.width * ratio;
           let newHeight = img.height * ratio;
-
+          console.log(newWidth, newHeight);
           setImageSize({ width: newWidth, height: newHeight });
           setImage(img);
         };
@@ -162,14 +164,20 @@ const SnowEffectOnUploadedImage = () => {
           <S.StyledFileInput type="file" onChange={handleFlakeImageChange} />
         </S.InputContainer>
       </S.FileInputContainer>
-      <canvas
-        ref={canvasRef}
+      <div
         style={{
-          width: "100%",
-          height: "auto",
-          display: image ? "block" : "none",
-        }}
-      />
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}>
+        <canvas
+          ref={canvasRef}
+          style={{
+            backgroundSize: "contain",
+            display: image ? "block" : "none",
+          }}
+        />
+      </div>
 
       <S.LabelContainer>
         <SnowSizeControl
