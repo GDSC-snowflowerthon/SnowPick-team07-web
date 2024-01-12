@@ -19,7 +19,7 @@ function App() {
             <Route path="/gifList" element={<GifListPage />} />
           </Routes>
         </S.ContentWrapper>
-        <Footer />
+        <div></div>
       </S.Wrapper>
     </Router>
   );
