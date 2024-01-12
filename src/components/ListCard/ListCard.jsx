@@ -35,8 +35,8 @@ const ListCard = () => {
   };
 
   const handleClickCard = (image) => {
-    setSelectedImage(image); // 이미지 state 업데이트
-    setShowDownloadPopup(true); // 팝업 show
+    setSelectedImage(image);
+    setShowDownloadPopup(true);
   };
 
   const downloadFile = (url) => {
@@ -71,7 +71,7 @@ const ListCard = () => {
   };
 
   const handleCancel = () => {
-    setShowDownloadPopup(false); // 팝업 noShow
+    setShowDownloadPopup(false);
   };
 
   return (
