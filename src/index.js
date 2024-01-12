@@ -6,7 +6,9 @@ import GlobalStyle from "./GlobalStyle"; // reset css용
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <GlobalStyle />
-    <App />
+    <div style={{ backgroundImage: `url('/img/background.png')` }}>
+      <GlobalStyle />
+      <App />
+    </div>
   </React.StrictMode>
 );
