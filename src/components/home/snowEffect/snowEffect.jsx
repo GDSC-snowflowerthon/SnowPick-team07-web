@@ -5,9 +5,36 @@ import ShareSnowButton from "../../button/ShareSnowButton/ShareSnowButton";
 import SnowSizeControl from "../label/SnowSizeControl";
 import SnowSpeedControl from "../label/SnowSpeedControl";
 import SnowColorControl from "../label/SnowColorControl";
+import AWS from "aws-sdk";
+
+const S3_BUCKET = "snowpickbucket";
+const REGION = "ap-northeast-2";
+
+AWS.config.update({
+  accessKeyId: process.env.REACT_APP_ACCESS_KEY,
+  secretAccessKey: process.env.REACT_APP_SECRET_KEY,
+  s3Url: "https://snowpickbucket.s3.amazonaws.com",
+  params: { Bucket: S3_BUCKET },
+});
+
+// accessKeyId: config.accessKeyId,
+//     secretAccessKey: config.secretAccessKey,
+//     region: config.region,
+//     params: {Bucket: config.bucket},
+//     httpOptions: {timeout: 1000},
+const myBucket = new AWS.S3({
+  params: { Bucket: S3_BUCKET },
+  region: REGION,
+});
 
 const SnowEffectOnUploadedImage = () => {
   const canvasRef = useRef(null);
+  const [image1, setImage1] = useState(null);
+
+  const handleFileInput = (e) => {
+    setImage1(e.target.files[0]);
+    console.log(e.target.files[0]);
+  };
   const [image, setImage] = useState(null);
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
   const [flakeImage, setFlakeImage] = useState(null);
@@ -61,6 +88,26 @@ const SnowEffectOnUploadedImage = () => {
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const uploadFile = (file) => {
+    const params = {
+      ACL: "public-read",
+      Body: file,
+      Bucket: S3_BUCKET,
+      Key: "custom/" + file.name,
+    };
+
+    myBucket
+      .putObject(params)
+      .on("httpUploadProgress", (evt) => {
+        setTimeout(() => {
+          setImage(null);
+        }, 3000);
+      })
+      .send((err) => {
+        if (err) console.log("image upload error", err);
+      });
   };
 
   useEffect(() => {
