@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import * as S from "./style";
 import GenerateGIFButton from "../../button/GenerateGIFButton/GenerateGIFButton";
+import ShareSnowButton from "../../button/ShareSnowButton/ShareSnowButton";
 import SnowSizeControl from "../label/SnowSizeControl";
 import SnowSpeedControl from "../label/SnowSpeedControl";
 import SnowColorControl from "../label/SnowColorControl";
@@ -200,16 +201,19 @@ const SnowEffectOnUploadedImage = () => {
             onChange={() => setUseFlakeImage(!useFlakeImage)}
           />
         </label>
-        <GenerateGIFButton
-          canvasRef={canvasRef}
-          imageSize={imageSize}
-          image={image}
-          Flake={Flake}
-          snowflakeSize={snowflakeSize}
-          snowflakeSpeed={snowflakeSpeed}
-          snowflakeColor={snowflakeColor}
-          setSnowflakeSpeed={setSnowflakeSpeed}
-        />
+        <S.ButtonContainer>
+          <ShareSnowButton />
+          <GenerateGIFButton
+            canvasRef={canvasRef}
+            imageSize={imageSize}
+            image={image}
+            Flake={Flake}
+            snowflakeSize={snowflakeSize}
+            snowflakeSpeed={snowflakeSpeed}
+            snowflakeColor={snowflakeColor}
+            setSnowflakeSpeed={setSnowflakeSpeed}
+          />
+        </S.ButtonContainer>
       </S.LabelContainer>
     </S.Container>
   );

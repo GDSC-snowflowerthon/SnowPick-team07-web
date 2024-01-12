@@ -48,3 +48,9 @@ export const StyledFileInput = styled.input.attrs({ type: "file" })`
     background-color: #45a049;
   }
 `;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
