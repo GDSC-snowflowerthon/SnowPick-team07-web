@@ -45,21 +45,6 @@ const SnowEffectOnUploadedImage = () => {
       reader.readAsDataURL(file);
     }
   };
-  // const handleImageChange = (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onload = (e) => {
-  //       const img = new Image();
-  //       img.onload = () => {
-  //         setImageSize({ width: img.width, height: img.height });
-  //         setImage(img);
-  //       };
-  //       img.src = e.target.result;
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
 
   const handleFlakeImageChange = (event) => {
     const file = event.target.files[0];
@@ -216,6 +201,7 @@ const SnowEffectOnUploadedImage = () => {
           snowflakeSize={snowflakeSize}
           snowflakeSpeed={snowflakeSpeed}
           snowflakeColor={snowflakeColor}
+          setSnowflakeSpeed={setSnowflakeSpeed}
         />
       </S.LabelContainer>
     </S.Container>
