@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import * as S from "./style";
 import GIF from "gif.js";
+import GifDownloadPopup from "../../Popup/GifDownloadPopup";
 
 const GenerateGIFButton = ({
   canvasRef,
@@ -11,11 +12,17 @@ const GenerateGIFButton = ({
   snowflakeSpeed,
   snowflakeColor,
 }) => {
+  const [showDownloadPopup, setShowDownloadPopup] = useState(false);
+  const [gifUrl, setGifUrl] = useState(null);
+
   const generateGIF = () => {
     if (!canvasRef.current || !image) {
       alert("이미지를 선택해주세요.");
       return;
+    } else {
+      setShowDownloadPopup(true);
     }
+
     const gif = new GIF({
       workers: 2,
       quality: 10,
@@ -28,6 +35,8 @@ const GenerateGIFButton = ({
 
     gif.on("finished", function (blob) {
       const url = URL.createObjectURL(blob);
+      // 팝업에 props로 보낼 gifUrl에 값 넣기
+      setGifUrl(url);
 
       // 다운로드 링크 생성
       const downloadLink = document.createElement("a");
@@ -63,10 +72,26 @@ const GenerateGIFButton = ({
     return flakes;
   };
 
+  // 팝업 관련
+  const handleDownload = () => {
+    // 이미지 다운로드 로직
+    // selectedImage를 사용하여 다운로드 할 예정
+    setShowDownloadPopup(false); // 팝업 noShow
+  };
+
+  const handleCancel = () => {
+    setShowDownloadPopup(false); // 팝업 noShow
+  };
+
   return (
-    <S.GenerateButton onClick={generateGIF}>
-      GIF 이미지 생성하기
-    </S.GenerateButton>
+    <>
+      <S.GenerateButton onClick={generateGIF}>
+        GIF 이미지 생성하기
+      </S.GenerateButton>
+      {showDownloadPopup && (
+        <GifDownloadPopup onDownload={handleDownload} onCancel={handleCancel} />
+      )}
+    </>
   );
 };
 

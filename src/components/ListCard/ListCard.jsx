@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as S from "./style";
-import DownloadPopup from "../Popup/DownloadPopup";
+import ImageDownloadPopup from "../Popup/ImageDownloadPopup";
 
 const ListCard = () => {
   const [showDownloadPopup, setShowDownloadPopup] = useState(false);
@@ -42,7 +42,10 @@ const ListCard = () => {
       </S.ListRowContainer>
 
       {showDownloadPopup && (
-        <DownloadPopup onDownload={handleDownload} onCancel={handleCancel} />
+        <ImageDownloadPopup
+          onDownload={handleDownload}
+          onCancel={handleCancel}
+        />
       )}
     </S.ListContainer>
   );
