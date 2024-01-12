@@ -94,15 +94,15 @@ const SnowEffectOnUploadedImage = () => {
     this.x = Math.random() * imageSize.width;
     this.y = Math.random() * imageSize.height;
     this.size = (100 / (10 + Math.random() * 100)) * snowflakeSize * 2;
-    this.speed = Math.pow(this.size * 0.8, 2) * snowflakeSpeed * 0.1 * 0.001;
+    this.speed = Math.pow(this.size * 0.8, 2) * 0.1 * 0.001;
     this.speed = this.speed < 1 ? 1 : this.speed;
-    this.velY = this.speed * 2;
+    this.velY = this.speed * snowflakeSpeed;
     this.velX = 0;
     this.stepSize = Math.random() / 120;
     this.step = 0;
 
     this.update = function () {
-      const x = Math.sin((this.step += this.stepSize)) * snowflakeSpeed;
+      const x = Math.sin((this.step += this.stepSize)) * 0.1;
       this.y += this.velY;
       this.x += x;
 
