@@ -1,20 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as S from "./style";
 import ImageDownloadPopup from "../Popup/ImageDownloadPopup";
-import AWS from "aws-sdk";
-
-const S3_BUCKET = "snowpickbucket";
-const REGION = "ap-northeast-2";
-
-AWS.config.update({
-  accessKeyId: process.env.REACT_APP_ACCESS_KEY,
-  secretAccessKey: process.env.REACT_APP_SECRET_KEY,
-});
-
-const s3 = new AWS.S3({
-  region: REGION,
-  params: { Bucket: S3_BUCKET },
-});
 
 const GifListCard = () => {
   const [showDownloadPopup, setShowDownloadPopup] = useState(false);
@@ -81,7 +67,7 @@ const GifListCard = () => {
   };
 
   const handleCancel = () => {
-    setShowDownloadPopup(false); // 팝업 noShow
+    setShowDownloadPopup(false);
   };
 
   return (
@@ -95,13 +81,7 @@ const GifListCard = () => {
       </S.GifListContiner>
 
       {showDownloadPopup && (
-        <ImageDownloadPopup
-          // onDownload={() => {
-          //   handleDownload(selectedImage);
-          // }}
-          onDownload={downloadFile}
-          onCancel={handleCancel}
-        />
+        <ImageDownloadPopup onDownload={downloadFile} onCancel={handleCancel} />
       )}
     </S.ListContainer>
   );
