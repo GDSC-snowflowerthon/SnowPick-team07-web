@@ -89,7 +89,11 @@ const GenerateGIFButton = ({
         GIF 이미지 생성하기
       </S.GenerateButton>
       {showDownloadPopup && (
-        <GifDownloadPopup onDownload={handleDownload} onCancel={handleCancel} />
+        <GifDownloadPopup
+          gifUrl={gifUrl}
+          onDownload={handleDownload}
+          onCancel={handleCancel}
+        />
       )}
     </>
   );
