@@ -202,17 +202,21 @@ const SnowEffectOnUploadedImage = () => {
           />
         </label>
         <S.ButtonContainer>
-          <ShareSnowButton />
-          <GenerateGIFButton
-            canvasRef={canvasRef}
-            imageSize={imageSize}
-            image={image}
-            Flake={Flake}
-            snowflakeSize={snowflakeSize}
-            snowflakeSpeed={snowflakeSpeed}
-            snowflakeColor={snowflakeColor}
-            setSnowflakeSpeed={setSnowflakeSpeed}
-          />
+          {image && ( // 이미지가 있을 때만 공유 & 다운로드 버튼 렌더링
+            <>
+              <ShareSnowButton />
+              <GenerateGIFButton
+                canvasRef={canvasRef}
+                imageSize={imageSize}
+                image={image}
+                Flake={Flake}
+                snowflakeSize={snowflakeSize}
+                snowflakeSpeed={snowflakeSpeed}
+                snowflakeColor={snowflakeColor}
+                setSnowflakeSpeed={setSnowflakeSpeed}
+              />
+            </>
+          )}
         </S.ButtonContainer>
       </S.LabelContainer>
     </S.Container>
