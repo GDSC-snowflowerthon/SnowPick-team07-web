@@ -18,8 +18,9 @@ const myBucket = new AWS.S3({
   region: REGION,
 });
 
-const ShareSnowButton = ({ flakeImage, setLoading }) => {
+const ShareSnowButton = ({ flakeImage, setLoading, uploadImageToFirebase }) => {
   // 이미지 업로드 함수
+
   const uploadImage = () => {
     setLoading(true);
     const params = {
@@ -41,7 +42,9 @@ const ShareSnowButton = ({ flakeImage, setLoading }) => {
   };
 
   return (
-    <S.GenerateButton onClick={uploadImage}>눈송이 공유하기</S.GenerateButton>
+    <S.GenerateButton onClick={uploadImageToFirebase}>
+      눈송이 공유하기
+    </S.GenerateButton>
   );
 };
 
