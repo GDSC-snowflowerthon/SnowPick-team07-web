@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as S from "./style";
+import { ref, listAll, getDownloadURL } from "firebase/storage";
+import { fstorage } from "../../firebase";
 import ImageDownloadPopup from "../Popup/ImageDownloadPopup";
 
 const GifListCard = () => {
@@ -7,27 +9,38 @@ const GifListCard = () => {
   const [selectedImage, setSelectedImage] = useState("");
   const [data, setData] = useState([]);
 
+  // useEffect(() => {
+  //   const BASE_API_URL = process.env.REACT_APP_API;
+
+  //   async function fetchData() {
+  //     try {
+  //       const response = await fetch(BASE_API_URL + "/gif");
+
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+
+  //       const result = await response.json();
+  //       setData(result);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   }
+
+  //   fetchData();
+  // }, []);
+
   useEffect(() => {
-    const BASE_API_URL = process.env.REACT_APP_API;
-
-    async function fetchData() {
-      try {
-        const response = await fetch(BASE_API_URL + "/gif");
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const result = await response.json();
-        setData(result);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-
-    fetchData();
+    const imageRef = ref(fstorage, `/gif/`);
+    listAll(imageRef).then((response) => {
+      // console.log(response);
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setData((prev) => [...prev, url]);
+        });
+      });
+    });
   }, []);
-
   const extractFilenameFromUrl = (url) => {
     const parts = url.split("/");
     return parts[parts.length - 1];

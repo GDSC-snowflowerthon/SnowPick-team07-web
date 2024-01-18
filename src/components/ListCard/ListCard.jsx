@@ -1,32 +1,53 @@
 import React, { useState, useEffect } from "react";
 import * as S from "./style";
 import ImageDownloadPopup from "../Popup/ImageDownloadPopup";
+import { fstorage } from "../../firebase";
+
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  listAll,
+  getDownloadURL,
+} from "firebase/storage";
 
 const ListCard = () => {
   const [showDownloadPopup, setShowDownloadPopup] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [data, setData] = useState([]);
 
+  // useEffect(() => {
+  //   const BASE_API_URL = process.env.REACT_APP_API;
+
+  //   async function fetchData() {
+  //     try {
+  //       const response = await fetch(BASE_API_URL + "/custom/image");
+
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+
+  //       const result = await response.json();
+  //       setData(result);
+  //       console.log(result);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   }
+
+  //   fetchData();
+  // }, []);
+
   useEffect(() => {
-    const BASE_API_URL = process.env.REACT_APP_API;
-
-    async function fetchData() {
-      try {
-        const response = await fetch(BASE_API_URL + "/custom/image");
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const result = await response.json();
-        setData(result);
-        console.log(result);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-
-    fetchData();
+    const imageRef = ref(fstorage, `/image/`);
+    listAll(imageRef).then((response) => {
+      // console.log(response);
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setData((prev) => [...prev, url]);
+        });
+      });
+    });
   }, []);
 
   const extractFilenameFromUrl = (url) => {
@@ -35,8 +56,29 @@ const ListCard = () => {
   };
 
   const handleClickCard = (image) => {
+    console.log(image);
     setSelectedImage(image);
     setShowDownloadPopup(true);
+  };
+
+  const downloadFileFromFirebase = (url) => {
+    getDownloadURL(ref(fstorage, selectedImage))
+      .then((url) => {
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = "blob";
+        xhr.onload = (event) => {
+          const blob = xhr.response;
+        };
+        xhr.open("GET", url);
+        xhr.send();
+
+        // Or inserted into an <img> element
+        const img = document.getElementById("myimg");
+        img.setAttribute("src", url);
+      })
+      .catch((error) => {
+        // Handle any errors
+      });
   };
 
   const downloadFile = (url) => {
@@ -77,15 +119,18 @@ const ListCard = () => {
   return (
     <S.ListContainer>
       <S.ListRowContainer>
-        {data.map((res) => (
-          <S.CardContainer onClick={() => handleClickCard(res)}>
+        {data.map((res, idx) => (
+          <S.CardContainer onClick={() => handleClickCard(res)} key={res + idx}>
             <S.ImageContainer src={res} />
           </S.CardContainer>
         ))}
       </S.ListRowContainer>
 
       {showDownloadPopup && (
-        <ImageDownloadPopup onDownload={downloadFile} onCancel={handleCancel} />
+        <ImageDownloadPopup
+          onDownload={downloadFileFromFirebase}
+          onCancel={handleCancel}
+        />
       )}
     </S.ListContainer>
   );

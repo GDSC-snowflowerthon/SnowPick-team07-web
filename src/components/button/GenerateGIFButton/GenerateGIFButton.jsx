@@ -7,15 +7,16 @@ const GenerateGIFButton = ({
   canvasRef,
   imageSize,
   image,
-  Flake, // 클래스
+  Flake,
   snowflakeSize,
   snowflakeSpeed,
   snowflakeColor,
   setLoading,
+  uploadGifToFirebase,
 }) => {
   const [showDownloadPopup, setShowDownloadPopup] = useState(false);
-  const [gifUrl, setGifUrl] = useState(null); // PC에서 다운로드용 상태
-  const [gifBlob, setGifBlob] = useState(null); // gif blob 상태
+  const [gifUrl, setGifUrl] = useState(null);
+  const [gifBlob, setGifBlob] = useState(null);
 
   const generateGIF = () => {
     if (!canvasRef.current || !image) {
@@ -38,10 +39,8 @@ const GenerateGIFButton = ({
     const snowflakes = createSnowflakes(increasedSpeed);
 
     gif.on("finished", function (blob) {
-      // 공유하기 POST로 보낼 gifBlob 업데이트
       setGifBlob(blob);
       const url = URL.createObjectURL(blob);
-      // 팝업에 props로 보낼 gifUrl에 값 넣기
       setGifUrl(url);
 
       // 다운로드 링크 생성
@@ -76,8 +75,6 @@ const GenerateGIFButton = ({
 
   // 팝업 관련
   const handleDownload = () => {
-    // 이미지 다운로드 로직
-    // selectedImage를 사용하여 다운로드 할 예정
     setShowDownloadPopup(false); // 팝업 noShow
   };
 
@@ -117,11 +114,16 @@ const GenerateGIFButton = ({
       </S.GenerateButton>
       {showDownloadPopup && (
         <GifDownloadPopup
+          image={image}
           setLoading={setLoading}
           gifUrl={gifUrl}
           onDownload={handleDownload}
           onCancel={handleCancel}
-          onShare={uploadGIF}
+          onShare={() => {
+            uploadGifToFirebase(gifBlob).then(() => {
+              setShowDownloadPopup(false);
+            });
+          }}
         />
       )}
     </>

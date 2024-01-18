@@ -1,3 +1,12 @@
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  listAll,
+  getDownloadURL,
+} from "firebase/storage";
+import { fstorage } from "../../../firebase";
+
 import React, { useRef, useEffect, useState } from "react";
 import * as S from "./style";
 import GenerateGIFButton from "../../button/GenerateGIFButton/GenerateGIFButton";
@@ -29,15 +38,14 @@ const SnowEffectOnUploadedImage = () => {
 
   const handleFileInput = (e) => {
     setImage1(e.target.files[0]);
-    console.log(e.target.files[0]);
   };
   const [image, setImage] = useState(null);
+  const [gifImageName, setGifImageName] = useState("");
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
   const [flakeImage, setFlakeImage] = useState(null);
 
   // 눈송이 이미지를 넣었는지 여부
   const [loading, setLoading] = useState(false);
-
   const [useFlakeImage, setUseFlakeImage] = useState(true);
 
   // 사용자 설정을 위한 상태
@@ -50,8 +58,31 @@ const SnowEffectOnUploadedImage = () => {
   const STANDARD_WIDTH = 500;
   const STANDARD_HEIGHT = 500;
 
+  const uploadImageToFirebase = async () => {
+    if (!image1) return;
+    setLoading(true);
+    const fileRef = ref(fstorage, `/image/${image1.name}`);
+    uploadBytes(fileRef, image1, { contentType: image1.type }).then(() => {
+      setLoading(false);
+    });
+  };
+
+  const uploadGifToFirebase = async (gifBlob) => {
+    if (!image) return;
+
+    const timestamp = new Date().getTime();
+    setLoading(true);
+
+    const fileRef = ref(fstorage, `/gif/${gifImageName + timestamp}`);
+    uploadBytes(fileRef, gifBlob, { contentType: "image/gif" }).then(() => {
+      setLoading(false);
+    });
+  };
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
+
+    setGifImageName(file.name);
     if (file) {
       const reader = new FileReader();
 
@@ -96,11 +127,6 @@ const SnowEffectOnUploadedImage = () => {
       Bucket: S3_BUCKET,
       Key: "custom/" + file.name,
     };
-
-    // myBucket.putObject(params).send((err, data) => {
-    //   if (err) console.log(err);
-    //   else console.log(data);
-    // });
 
     myBucket
       .putObject(params)
@@ -257,13 +283,19 @@ const SnowEffectOnUploadedImage = () => {
         <S.ButtonContainer>
           {image && ( // 이미지가 있을 때만 공유 & 다운로드 버튼 렌더링
             <>
-              <ShareSnowButton flakeImage={image1} setLoading={setLoading} />
+              <ShareSnowButton
+                flakeImage={image1}
+                setLoading={setLoading}
+                uploadImageToFirebase={uploadImageToFirebase}
+              />
               <GenerateGIFButton
                 setLoading={setLoading}
                 canvasRef={canvasRef}
                 imageSize={imageSize}
+                gifName={gifImageName}
                 image={image}
                 Flake={Flake}
+                uploadGifToFirebase={uploadGifToFirebase}
                 snowflakeSize={snowflakeSize}
                 snowflakeSpeed={snowflakeSpeed}
                 snowflakeColor={snowflakeColor}
