@@ -9,7 +9,8 @@ root.render(
     <div
       style={{
         height: "100vh",
-        backgroundImage: `url('/img/background.png')`,
+        backgroundImage: `url('/img/background2.png')`,
+        backgroundSize: "cover",
       }}>
       <GlobalStyle />
       <App />
