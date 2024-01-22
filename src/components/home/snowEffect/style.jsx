@@ -1,9 +1,12 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  margin: 0 auto;
+  /* min-width: 700px; */
   background-color: white;
-  border-radius: 20px;
-  padding: 20px;
+  border-radius: 10px;
+  padding: 3rem;
+  width: 50%;
 `;
 
 export const FileInputContainer = styled.div`
