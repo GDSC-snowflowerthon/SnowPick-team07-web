@@ -8,8 +8,12 @@ root.render(
   <React.StrictMode>
     <div
       style={{
-        height: "100vh",
-        backgroundImage: `url('/img/background.png')`,
+        // height: "120vh",
+        overflowY: "auto",
+        backgroundPosition: "center center",
+        backgroundAttachment: "fixed",
+        backgroundImage: `url('/img/background2.png')`,
+        backgroundSize: "cover",
       }}>
       <GlobalStyle />
       <App />

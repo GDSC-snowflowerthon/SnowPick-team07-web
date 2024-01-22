@@ -31,7 +31,7 @@ export const PopupContainer = styled.div`
 
 // 다운로드 문구
 export const DownloadTitle = styled.p`
-  font-size: 28px;
+  font-size: 18px;
   font-weight: 600;
   margin-bottom: 20px;
 `;

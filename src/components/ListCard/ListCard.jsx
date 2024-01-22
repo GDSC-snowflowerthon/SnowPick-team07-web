@@ -56,7 +56,6 @@ const ListCard = () => {
   };
 
   const handleClickCard = (image) => {
-    console.log(image);
     setSelectedImage(image);
     setShowDownloadPopup(true);
   };
@@ -64,22 +63,45 @@ const ListCard = () => {
   const downloadFileFromFirebase = (url) => {
     getDownloadURL(ref(fstorage, selectedImage))
       .then((url) => {
-        const xhr = new XMLHttpRequest();
-        xhr.responseType = "blob";
-        xhr.onload = (event) => {
-          const blob = xhr.response;
-        };
-        xhr.open("GET", url);
-        xhr.send();
-
-        // Or inserted into an <img> element
-        const img = document.getElementById("myimg");
-        img.setAttribute("src", url);
+        fetch(url)
+          .then((response) => response.blob())
+          .then((blob) => {
+            const urlObject = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = urlObject;
+            a.download = "downloaded-image.jpg";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+          })
+          .catch((e) => console.error(e));
       })
       .catch((error) => {
-        // Handle any errors
+        console.error(error);
       });
   };
+
+  // const downloadFileFromFirebase = (url) => {
+  //   getDownloadURL(ref(fstorage, selectedImage))
+  //     .then((url) => {
+  //       console.log(url);
+  //       console.log("AAA");
+  //       const xhr = new XMLHttpRequest();
+  //       xhr.responseType = "blob";
+  //       xhr.onload = (event) => {
+  //         const blob = xhr.response;
+  //         console.log(blob);
+  //       };
+  //       xhr.open("GET", url);
+  //       xhr.send();
+
+  //       // const img = document.getElementById("myimg");
+  //       // img.setAttribute("src", url);
+  //     })
+  //     .catch((error) => {
+  //       // Handle any errors
+  //     });
+  // };
 
   const downloadFile = (url) => {
     console.log(extractFilenameFromUrl(selectedImage));

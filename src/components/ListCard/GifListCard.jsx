@@ -47,37 +47,57 @@ const GifListCard = () => {
   };
 
   const handleClickCard = (image) => {
-    setSelectedImage(image); // 이미지 state 업데이트
-    setShowDownloadPopup(true); // 팝업 show
+    setSelectedImage(image);
+    setShowDownloadPopup(true);
   };
 
-  const downloadFile = (url) => {
-    url =
-      process.env.REACT_APP_S3 + "gif/" + extractFilenameFromUrl(selectedImage);
-
-    fetch(url, { method: "GET" })
-      .then((res) => {
-        return res.blob();
+  const downloadFileFromFirebase = (url) => {
+    getDownloadURL(ref(fstorage, selectedImage))
+      .then((url) => {
+        fetch(url)
+          .then((response) => response.blob())
+          .then((blob) => {
+            const urlObject = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = urlObject;
+            a.download = "downloaded-image.jpg";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+          })
+          .catch((e) => console.error(e));
       })
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-
-        a.href = url;
-        a.download = extractFilenameFromUrl(selectedImage);
-        document.body.appendChild(a);
-        a.click();
-        setTimeout((_) => {
-          window.URL.revokeObjectURL(url);
-        }, 60000);
-        a.remove();
-        console.log();
-        // setOpen(false);
-      })
-      .catch((err) => {
-        console.error("err: ", err);
+      .catch((error) => {
+        console.error(error);
       });
   };
+  // const downloadFile = (url) => {
+  //   url =
+  //     process.env.REACT_APP_S3 + "gif/" + extractFilenameFromUrl(selectedImage);
+
+  //   fetch(url, { method: "GET" })
+  //     .then((res) => {
+  //       return res.blob();
+  //     })
+  //     .then((blob) => {
+  //       const url = window.URL.createObjectURL(blob);
+  //       const a = document.createElement("a");
+
+  //       a.href = url;
+  //       a.download = extractFilenameFromUrl(selectedImage);
+  //       document.body.appendChild(a);
+  //       a.click();
+  //       setTimeout((_) => {
+  //         window.URL.revokeObjectURL(url);
+  //       }, 60000);
+  //       a.remove();
+  //       console.log();
+  //       // setOpen(false);
+  //     })
+  //     .catch((err) => {
+  //       console.error("err: ", err);
+  //     });
+  // };
 
   const handleCancel = () => {
     setShowDownloadPopup(false);
@@ -94,7 +114,10 @@ const GifListCard = () => {
       </S.GifListContiner>
 
       {showDownloadPopup && (
-        <ImageDownloadPopup onDownload={downloadFile} onCancel={handleCancel} />
+        <ImageDownloadPopup
+          onDownload={downloadFileFromFirebase}
+          onCancel={handleCancel}
+        />
       )}
     </S.ListContainer>
   );
