@@ -66,14 +66,13 @@ import { NavLink } from "react-router-dom";
 export const NavContainer = styled.div`
   /* height: 75px; */
   margin: 0 auto;
-  padding-top: 10rem;
-  width: 50%;
+  padding-top: 4rem;
+  width: 55%;
   color: white;
   /* background-color: rgba(255, 255, 255, 1); */
   font-weight: bold;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: start;
 `;
 
@@ -152,4 +151,11 @@ export const NavLinkDiv = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+`;
+
+export const MiddleText = styled.div`
+  font-weight: 100;
+  font-size: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
 `;

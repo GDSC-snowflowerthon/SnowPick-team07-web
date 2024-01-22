@@ -6,7 +6,7 @@ export const Container = styled.div`
   background-color: white;
   border-radius: 10px;
   padding: 3rem;
-  width: 50%;
+  width: 55%;
 `;
 
 export const FileInputContainer = styled.div`
