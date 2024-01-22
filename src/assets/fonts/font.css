@@ -1,5 +1,24 @@
 @font-face {
   font-family: "NotoSansKR";
+  src: url("./NotoSansKR-Thin.woff") format("woff");
+  font-weight: 100; /* Regular */
+  font-style: normal;
+}
+@font-face {
+  font-family: "NotoSansKR";
+  src: url("./NotoSansKR-ExtraLight.woff") format("woff");
+  font-weight: 200; /* Regular */
+  font-style: normal;
+}
+@font-face {
+  font-family: "NotoSansKR";
+  src: url("./NotoSansKR-Light.woff") format("woff");
+  font-weight: 300; /* Regular */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NotoSansKR";
   src: url("./NotoSansKR-Regular.woff") format("woff");
   font-weight: 400; /* Regular */
   font-style: normal;
