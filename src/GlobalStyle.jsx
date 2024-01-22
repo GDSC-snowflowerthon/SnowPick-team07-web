@@ -1,13 +1,15 @@
 // GlobalStyle.js
 import { createGlobalStyle } from "styled-components";
+import "./assets/fonts/font.css";
 
 const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&family=Space+Mono&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&family=Space+Mono&display=swap'); */
 
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
   }
   html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -26,6 +28,7 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
+	font-family: "NotoSansKR";
 	font: inherit;
 	vertical-align: baseline;
 }
@@ -54,8 +57,8 @@ table {
 }
 
 body {
-	font-family: "Dongle", sans-serif;
-	font-size: 26px;
+	font-family: "NotoSansKR", sans-serif;
+	/* font-size: 26px; */
 }
 `;
 
